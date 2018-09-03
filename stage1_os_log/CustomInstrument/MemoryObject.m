@@ -45,18 +45,14 @@ os_log_t mem_alloc_log;
     if (self) {
     
         memSize_ = [self getRandomMemSize];
-        
-        
-
+        bool a = os_log_type_enabled(mem_alloc_log, OS_LOG_TYPE_INFO);
         if (memSize_ <= 1*1024*1024)
-        {
             os_log_info(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
-         }
         else if (memSize_ <= 10*1024*1024)
             os_log_error(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
         else
             os_log_fault(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
-
+        
         usleep(200*1000);
         mem_ = malloc(memSize_);
 
@@ -72,10 +68,14 @@ os_log_t mem_alloc_log;
             
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(inteval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                
                 self->memSize_ = [self getRandomMemSize];
                 os_log_debug(mem_alloc_log, "realloc MemoryObject with %d bytes", self->memSize_);
                 usleep(200*1000);
-                self->mem_ = realloc(mem_, memSize_);
+                self->mem_ = realloc(self->mem_, self->memSize_);
+                
+                
             });
             
 
@@ -97,8 +97,10 @@ os_log_t mem_alloc_log;
 {
     
     os_log(mem_alloc_log, "dealloc MemoryObject with %d bytes", memSize_);
-    usleep(200*1000);
+     usleep(200*1000);
     free(mem_);
+    
+   
     
 }
 @end

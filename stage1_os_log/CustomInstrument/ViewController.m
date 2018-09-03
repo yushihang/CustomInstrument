@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     
-    mem_alloc_log = os_log_create("yh.CustomInstrument1", "mem_alloc");
+    mem_alloc_log = os_log_create("yh.CustomInstrument", "mem_alloc");
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeMemoryObject:) name:@"removeMe" object:nil];
     
