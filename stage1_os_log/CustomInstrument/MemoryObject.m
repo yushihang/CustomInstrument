@@ -49,7 +49,9 @@ os_log_t mem_alloc_log;
         
 
         if (memSize_ <= 1*1024*1024)
+        {
             os_log_info(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
+         }
         else if (memSize_ <= 10*1024*1024)
             os_log_error(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
         else
