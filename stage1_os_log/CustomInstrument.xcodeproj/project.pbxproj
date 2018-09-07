@@ -13,7 +13,7 @@
 		B190D15F213ACF100039CFDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B190D15E213ACF100039CFDB /* Assets.xcassets */; };
 		B190D162213ACF100039CFDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B190D160213ACF100039CFDB /* LaunchScreen.storyboard */; };
 		B190D165213ACF100039CFDB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B190D164213ACF100039CFDB /* main.m */; };
-		B190D16D213ACFC90039CFDB /* MemoryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B190D16C213ACFC90039CFDB /* MemoryObject.m */; };
+		B190D16D213ACFC90039CFDB /* MemoryObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = B190D16C213ACFC90039CFDB /* MemoryObject.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +28,9 @@
 		B190D163213ACF100039CFDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B190D164213ACF100039CFDB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B190D16B213ACFC90039CFDB /* MemoryObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryObject.h; sourceTree = "<group>"; };
-		B190D16C213ACFC90039CFDB /* MemoryObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemoryObject.m; sourceTree = "<group>"; };
+		B190D16C213ACFC90039CFDB /* MemoryObject.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp.preprocessed; path = MemoryObject.mm; sourceTree = "<group>"; };
+		B1BF5A6D2142CCC5003D85BE /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		B1BF5A6E2142CCC5003D85BE /* test.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = test.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +73,9 @@
 				B190D163213ACF100039CFDB /* Info.plist */,
 				B190D164213ACF100039CFDB /* main.m */,
 				B190D16B213ACFC90039CFDB /* MemoryObject.h */,
-				B190D16C213ACFC90039CFDB /* MemoryObject.m */,
+				B190D16C213ACFC90039CFDB /* MemoryObject.mm */,
+				B1BF5A6D2142CCC5003D85BE /* test.h */,
+				B1BF5A6E2142CCC5003D85BE /* test.mm */,
 			);
 			path = CustomInstrument;
 			sourceTree = "<group>";
@@ -147,7 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B190D15A213ACF0E0039CFDB /* ViewController.m in Sources */,
-				B190D16D213ACFC90039CFDB /* MemoryObject.m in Sources */,
+				B190D16D213ACFC90039CFDB /* MemoryObject.mm in Sources */,
 				B190D165213ACF100039CFDB /* main.m in Sources */,
 				B190D157213ACF0E0039CFDB /* AppDelegate.m in Sources */,
 			);
