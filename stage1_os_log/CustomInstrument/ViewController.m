@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "MemoryObject.h"
-
+#import <os/signpost.h>
 @interface ViewController ()
 {
     NSMutableArray* _memoryObjectArray;
@@ -23,6 +23,8 @@
     
     mem_alloc_log = os_log_create("yh.CustomInstrument", "mem_alloc");
     
+    point_of_interest_log = os_log_create("", OS_LOG_CATEGORY_POINTS_OF_INTEREST);
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeMemoryObject:) name:@"removeMe" object:nil];
     
     
@@ -32,7 +34,7 @@
     
     [NSTimer scheduledTimerWithTimeInterval:3. repeats:YES block:^(NSTimer * _Nonnull timer) {
         MemoryObject* memoryObject = [[MemoryObject alloc] init];
-        [_memoryObjectArray addObject:memoryObject];
+        [self->_memoryObjectArray addObject:memoryObject];
     }];
     // Do any additional setup after loading the view, typically from a nib.
 }

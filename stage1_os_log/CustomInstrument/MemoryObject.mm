@@ -12,12 +12,14 @@
 #import <os/signpost.h>
 #import <string>
 os_log_t mem_alloc_log;
+ os_log_t point_of_interest_log;
 @interface MemoryObject()
 {
     void* mem_;
     int memSize_;
     os_signpost_id_t signpost_id;
     std::string memString;
+os_signpost_id_t signpost_id2;
     
 
 }
@@ -50,33 +52,32 @@ os_log_t mem_alloc_log;
     if (self) {
 
         signpost_id = os_signpost_id_generate(mem_alloc_log);
+        signpost_id2 = os_signpost_id_generate(point_of_interest_log);
         memSize_ = [self getRandomMemSize];
         bool a = os_log_type_enabled(mem_alloc_log, OS_LOG_TYPE_DEBUG);
         
         if (memSize_ <= 1*1024*1024)
         {
             os_signpost_interval_begin(
-                                       mem_alloc_log, signpost_id, "1M"
-                                       
-                                       );
+                                       mem_alloc_log, signpost_id, "1M","malloc %{xcode:size-in-bytes}d bytes", memSize_);
             
-            os_log_info(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
+            os_log_info(mem_alloc_log, "malloc %d bytes", memSize_);
         }
         else if (memSize_ <= 10*1024*1024)
         {
-            os_signpost_interval_begin(mem_alloc_log, signpost_id, "<10M");
-            os_log_error(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
+            os_signpost_interval_begin(mem_alloc_log, signpost_id, "<10M","malloc %{xcode:size-in-bytes}d bytes", memSize_);
+            os_log_error(mem_alloc_log, "malloc %d bytes", memSize_);
         }
         else
         {
-            os_signpost_interval_begin(mem_alloc_log, signpost_id, ">10M");
-            os_log_fault(mem_alloc_log, "malloc MemoryObject with %d bytes", memSize_);
+            os_signpost_interval_begin(mem_alloc_log, signpost_id, ">10M", "malloc %{xcode:size-in-bytes}d bytes", memSize_);
+            os_log_fault(mem_alloc_log, "malloc %d bytes", memSize_);
         }
         
         usleep(200*1000);
         mem_ = malloc(memSize_);
 
-        
+
         
         float lifeTime = ((float)arc4random_uniform(500))/100.f + 1.0f;
         
@@ -92,6 +93,8 @@ os_log_t mem_alloc_log;
                 
                 self->memSize_ = [self getRandomMemSize];
                 os_log_debug(mem_alloc_log, "realloc MemoryObject with %d bytes", self->memSize_);
+                os_signpost_event_emit(point_of_interest_log, self->signpost_id2,"realloc", "realloc %{xcode:size-in-bytes}d bytes", self->memSize_);
+                os_signpost_event_emit(mem_alloc_log, self->signpost_id2,"realloc", "realloc %{xcode:size-in-bytes}d bytes", self->memSize_);
                 usleep(200*1000);
                 self->mem_ = realloc(self->mem_, self->memSize_);
                 
@@ -118,20 +121,19 @@ os_log_t mem_alloc_log;
     if (memSize_ <= 1*1024*1024)
     {
         os_signpost_interval_end(
-                                   mem_alloc_log, signpost_id, "1M"
-                                   
-                                   );
+                                   mem_alloc_log, signpost_id, "1M",
+"dealloc %{xcode:size-in-bytes}d bytes", memSize_);
         
 
     }
     else if (memSize_ <= 10*1024*1024)
     {
-        os_signpost_interval_end(mem_alloc_log, signpost_id, "<10M");
+        os_signpost_interval_end(mem_alloc_log, signpost_id, "<10M", "dealloc %{xcode:size-in-bytes}d bytes", memSize_);
 
     }
     else
     {
-        os_signpost_interval_end(mem_alloc_log, signpost_id, ">10M");
+        os_signpost_interval_end(mem_alloc_log, signpost_id, ">10M", "dealloc %{xcode:size-in-bytes}d bytes", memSize_);
 
     }
      os_log(mem_alloc_log, "dealloc MemoryObject with %d bytes", memSize_);
