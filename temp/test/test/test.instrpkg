@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package>
+	<id>test.test</id>
+	<title>test</title>
+	<owner>
+		<name>yushihang</name>
+	</owner>
+    
+    <os-signpost-interval-schema>
+        <id>custominstrument</id>
+        <title>custominstrument</title>
+        
+        <subsystem>"yh.CustomInstrument"</subsystem>
+        <category>"mem_alloc"</category>
+        
+        <start-pattern>
+            <message>"malloc " ?data-size " bytes"</message>
+        </start-pattern>
+        <end-pattern>
+            <message>"dealloc " ?data-size " bytes"</message>
+        </end-pattern>
+        <column>
+            <mnemonic>data-size</mnemonic>
+            <title>memory-size</title>
+            <type>size-in-bytes</type>
+            <expression>?data-size</expression>
+        </column>
+        
+        <column>
+            <mnemonic>data-size-color</mnemonic>
+            <title>memory-size-color</title>
+            <type>event-concept</type>
+            <expression>(if (&gt; ?data-size 6000000) then (if (&gt; ?data-size 12000000) then "Red" else "Orange") else (if (&gt; ?data-size 2000000) then "Purple" else "Green")) </expression>
+        </column>
+    </os-signpost-interval-schema>
+    
+    <!-- Instruments Developer Help: https://help.apple.com/instruments/developer/mac/current/ -->
+    
+    
+    <instrument>
+        <id>custommalloc</id>
+        <title>myinstrument</title>
+        <category>Memory</category>
+        <purpose>mem_alloc purpose</purpose>
+        <icon>Virtual Memory</icon>
+        
+        <create-table>
+            <id>malloc-table</id>
+            <schema-ref>custominstrument</schema-ref>
+        </create-table>
+        
+        <graph>
+            <title>malloc graph</title>
+            <lane>
+                <title>malloc-graph-title</title>
+                <table-ref>malloc-table</table-ref>
+      
+                
+                <plot-template>
+                    <instance-by>data-size</instance-by>
+                    <label-format>malloc size:%s</label-format>
+                    <value-from>data-size</value-from>
+                    <color-from>data-size-color</color-from>
+                    <label-from>data-size</label-from>
+                </plot-template>
+                <!-- plot, plot-template or histogram elements -->
+            </lane>
+        </graph>
+        
+        <list>
+            <title>List: malloc</title>
+            <table-ref>malloc-table</table-ref>
+            <column>data-size</column>
+        </list>
+      </instrument>
+    <!-- MARK: Schema Definitions -->
+    <!-- Define point and interval schemas needed to represent the input and output tables your package will use. -->
+    <!-- Two kinds are available: schemas with automatically generated modelers, and schemas that require custom modelers -->
+    <!--   Generated modelers: 'os-log-point-schema', 'os-signpost-interval-schema', 'ktrace-point-schema', 'ktrace-interval-schema' -->
+    <!--   Custom modeler required: 'point-schema', 'interval-schema' -->
+    <!-- To use existing schemas from other packages, declare 'import-schema' elements -->
+  
+    <!-- MARK: Modeler Declarations -->
+    <!-- If there are schemas defined that require a custom modeler, each can be declared with a 'modeler' element -->
+    <!-- Modelers are based on CLIPS rules and may define 1..n output schemas, each requiring 1..n input schemas -->
+
+    <!-- MARK: Instrument Definitions -->
+    <!-- Instruments record and display data, creating concrete table requirements that instance modelers and data streams. -->
+    <!-- Any number of 'instrument' elements can be defined; each instrument should provide a cohesive graph and detail experience. -->
+
+    <!-- MARK: Embed Templates -->
+    <!-- Templates may be included and represent a collection of tools configured for a specific tracing workflow -->
+    <!-- Each 'template' element specifies the relative path to a .tracetemplate file in the project -->
+    <!-- To create a template: start with a blank document, configure with instruments desired, and choose "File -> Save as Template" -->
+</package>
