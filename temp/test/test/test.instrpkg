@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <package>
-	<id>test.test</id>
-	<title>test</title>
+	<id>Custom-Instrument</id>
+	<title>Custom Instrument</title>
 	<owner>
 		<name>yushihang</name>
 	</owner>
@@ -23,7 +23,7 @@
             <mnemonic>data-size</mnemonic>
             <title>memory-size</title>
             <type>size-in-bytes</type>
-            <expression>?data-size</expression>
+            <expression>?data-size1</expression>
         </column>
         
         <column>
@@ -54,7 +54,6 @@
             <lane>
                 <title>malloc-graph-title</title>
                 <table-ref>malloc-table</table-ref>
-      
                 
                 <plot-template>
                     <instance-by>data-size</instance-by>
@@ -63,7 +62,6 @@
                     <color-from>data-size-color</color-from>
                     <label-from>data-size</label-from>
                 </plot-template>
-                <!-- plot, plot-template or histogram elements -->
             </lane>
         </graph>
         
